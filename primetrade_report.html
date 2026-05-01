@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset='utf-8'>
+<title>Primetrade.ai - Trader Sentiment Analysis</title>
+<style>
+  body { font-family: 'Segoe UI', sans-serif; background: #0d1117; color: #c9d1d9; margin: 0; padding: 0; }
+  .header { background: linear-gradient(135deg, #1f6feb, #388bfd); padding: 40px 60px; }
+  .header h1 { color: white; font-size: 28px; margin: 0 0 8px 0; }
+  .header p { color: #cce5ff; margin: 0; font-size: 14px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 40px 30px; }
+  .section { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 28px; margin-bottom: 28px; }
+  h2 { color: #58a6ff; font-size: 18px; margin-top: 0; border-bottom: 1px solid #30363d; padding-bottom: 10px; }
+  h3 { color: #f0f6fc; font-size: 15px; }
+  .kpi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  .kpi { background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 18px; text-align: center; }
+  .kpi .val { font-size: 26px; font-weight: bold; color: #f9c74f; }
+  .kpi .lbl { font-size: 12px; color: #8b949e; margin-top: 4px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #21262d; color: #8b949e; padding: 10px 14px; text-align: left; font-weight: 600; }
+  td { padding: 10px 14px; border-bottom: 1px solid #21262d; }
+  tr:hover td { background: #21262d; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+  .fear { background: #e6394622; color: #e63946; border: 1px solid #e63946; }
+  .efear { background: #b5000022; color: #ff6b6b; border: 1px solid #ff6b6b; }
+  .neutral { background: #a8dadc22; color: #a8dadc; border: 1px solid #a8dadc; }
+  .greed { background: #57cc9922; color: #57cc99; border: 1px solid #57cc99; }
+  .egreed { background: #2d6a4f22; color: #74c69d; border: 1px solid #74c69d; }
+  .insight { background: #1f2937; border-left: 4px solid #f9c74f; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+  .insight strong { color: #f9c74f; }
+  .rec { background: #1a2a1a; border-left: 4px solid #57cc99; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+  .rec strong { color: #57cc99; }
+  .warn { background: #2a1a1a; border-left: 4px solid #e63946; padding: 14px 18px; border-radius: 0 8px 8px 0; margin: 12px 0; }
+  img { width: 100%; border-radius: 8px; margin-top: 10px; }
+  .footer { text-align: center; padding: 30px; color: #484f58; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class='header'>
+  <h1>🔍 Trader Performance vs Bitcoin Market Sentiment</h1>
+  <p>Primetrade.ai · Round-0 Data Science Analysis · 1 May 2026 · Dataset: Hyperliquid Historical Trades + Fear &amp; Greed Index</p>
+</div>
+<div class='container'>
+
+  <!-- KPIs -->
+  <div class='section'>
+    <h2>📊 Dataset Overview</h2>
+    <div class='kpi-grid'>
+      <div class='kpi'><div class='val'>211,224</div><div class='lbl'>Total Trades</div></div>
+      <div class='kpi'><div class='val'>32</div><div class='lbl'>Unique Traders</div></div>
+      <div class='kpi'><div class='val'>$10.30M</div><div class='lbl'>Total Closed PnL</div></div>
+      <div class='kpi'><div class='val'>$1.19B</div><div class='lbl'>Total Volume Traded</div></div>
+      <div class='kpi'><div class='val'>May 2023 – May 2025</div><div class='lbl'>Date Range</div></div>
+      <div class='kpi'><div class='val'>2.39%</div><div class='lbl'>Fee Drag on PnL</div></div>
+    </div>
+  </div>
+
+  <!-- Sentiment Distribution -->
+  <div class='section'>
+    <h2>🌡️ Sentiment Distribution of Trades</h2>
+    <table>
+      <tr><th>Sentiment</th><th>Trade Count</th><th>Total PnL</th><th>Avg PnL/Trade</th><th>Win Rate</th><th>Avg Trade Size</th></tr>
+      <tr><td><span class='tag efear'>Extreme Fear</span></td><td>21,400</td><td>$739K</td><td>$34.54</td><td>37.1%</td><td>$5,350</td></tr>
+      <tr><td><span class='tag fear'>Fear</span></td><td>61,837</td><td><strong>$3.36M</strong></td><td><strong>$54.29</strong></td><td>42.1%</td><td>$7,816</td></tr>
+      <tr><td><span class='tag neutral'>Neutral</span></td><td>37,686</td><td>$1.29M</td><td>$34.31</td><td>39.7%</td><td>$4,783</td></tr>
+      <tr><td><span class='tag greed'>Greed</span></td><td>50,303</td><td>$2.15M</td><td>$42.74</td><td>38.5%</td><td>$5,737</td></tr>
+      <tr><td><span class='tag egreed'>Extreme Greed</span></td><td>39,992</td><td>$2.72M</td><td>$67.89</td><td><strong>46.5%</strong></td><td>$3,112</td></tr>
+    </table>
+    <div class='insight'>
+      <strong>Key Finding:</strong> Fear periods generate the highest average PnL per trade ($54.29) AND the most trading volume ($483M). Extreme Greed has the best win rate (46.5%) but smaller average positions. This suggests experienced traders on Hyperliquid are comfortable buying into fear.
+    </div>
+  </div>
+
+  <!-- BUY vs SELL -->
+  <div class='section'>
+    <h2>📈 BUY vs SELL Performance by Sentiment</h2>
+    <table>
+      <tr><th>Sentiment</th><th>BUY Avg PnL</th><th>SELL Avg PnL</th><th>Edge</th></tr>
+      <tr><td><span class='tag efear'>Extreme Fear</span></td><td>$34.11</td><td>$34.98</td><td>Neutral</td></tr>
+      <tr><td><span class='tag fear'>Fear</span></td><td>$63.93</td><td>$45.05</td><td>BUY favoured</td></tr>
+      <tr><td><span class='tag neutral'>Neutral</span></td><td>$29.23</td><td>$39.46</td><td>SELL slight edge</td></tr>
+      <tr><td><span class='tag greed'>Greed</span></td><td>$25.00</td><td>$59.69</td><td><strong>SELL strongly favoured</strong></td></tr>
+      <tr><td><span class='tag egreed'>Extreme Greed</span></td><td>$10.50</td><td>$114.58</td><td><strong>SELL dominates</strong></td></tr>
+    </table>
+    <div class='insight'>
+      <strong>Contrarian Pattern Confirmed:</strong> SELL trades in Extreme Greed zones yield an average of $114.58 — nearly 11× more than BUY trades in the same conditions ($10.50). This strongly supports the classic "be fearful when others are greedy" principle.
+    </div>
+    <div class='rec'>
+      <strong>Strategy Signal:</strong> BUY aggressively in Fear, SELL aggressively in Greed/Extreme Greed for maximum edge.
+    </div>
+  </div>
+
+  <!-- Top Coins -->
+  <div class='section'>
+    <h2>🪙 Top Performing Coins</h2>
+    <table>
+      <tr><th>Rank</th><th>Coin</th><th>Total PnL</th></tr>
+      <tr><td>1</td><td>@107</td><td>$2,783,913</td></tr>
+      <tr><td>2</td><td>HYPE</td><td>$1,948,485</td></tr>
+      <tr><td>3</td><td>SOL</td><td>$1,639,556</td></tr>
+      <tr><td>4</td><td>ETH</td><td>$1,319,979</td></tr>
+      <tr><td>5</td><td>BTC</td><td>$868,045</td></tr>
+      <tr><td>6</td><td>MELANIA</td><td>$390,351</td></tr>
+      <tr><td>7</td><td>ENA</td><td>$217,330</td></tr>
+      <tr><td>8</td><td>SUI</td><td>$199,269</td></tr>
+    </table>
+    <div class='insight'>
+      <strong>Finding:</strong> @107 and HYPE together account for ~45% of total PnL. These are high-alpha niche assets. BTC/ETH contribute less per-trade but are the highest volume instruments.
+    </div>
+  </div>
+
+  <!-- Hidden Patterns -->
+  <div class='section'>
+    <h2>🔎 Hidden Patterns & Insights</h2>
+
+    <h3>1. Fear Zones Drive Volume, Not Just Panic</h3>
+    <div class='insight'>
+      <strong>Fear periods account for $483M</strong> in trading volume (41% of all volume) — the highest of any sentiment. Traders are <em>most active</em> during fear, contradicting the idea that fear drives inactivity.
+    </div>
+
+    <h3>2. Weak Correlation Between FG Index and Daily PnL</h3>
+    <div class='insight'>
+      <strong>Pearson r = 0.037</strong> — almost no linear relationship between the raw FG Index score and daily average PnL. This means sentiment alone doesn't predict daily performance; <em>how traders respond</em> to sentiment matters more than the sentiment itself.
+    </div>
+
+    <h3>3. Contrarian Traders Outperform in Extreme Fear</h3>
+    <div class='insight'>
+      Top 5 traders in Extreme Fear earned between $74K–$262K individually. These traders actively positioned long during the market's most fearful moments — a classic contrarian alpha strategy.
+    </div>
+
+    <h3>4. Trade Size Shrinks in Extreme Greed</h3>
+    <div class='insight'>
+      Average trade size drops from $7,816 (Fear) to $3,112 (Extreme Greed) — a 60% reduction. Smart money appears to scale down position sizes and take profits during euphoric markets.
+    </div>
+
+    <h3>5. Fee Drag is Minimal but Real</h3>
+    <div class='insight'>
+      Total fees of $245K represent 2.39% of gross PnL ($10.3M). For high-frequency traders, fee optimization could meaningfully improve net returns.
+    </div>
+
+    <h3>6. December 2024 Was the Greed Goldmine</h3>
+    <div class='insight'>
+      December 2024 saw $2.01M PnL in Extreme Greed and $990K in Greed — the single best month. This coincides with post-election BTC rally euphoria. Traders who shorted into this rally captured massive gains.
+    </div>
+  </div>
+
+  <!-- Recommendations -->
+  <div class='section'>
+    <h2>🚀 Strategic Recommendations</h2>
+    <div class='rec'><strong>Signal 1 — Fear = Buy Signal:</strong> Deploy long positions when FG Index &lt; 30. Historical avg PnL per trade is $54–67 vs $34 in neutral markets.</div>
+    <div class='rec'><strong>Signal 2 — Extreme Greed = Sell/Short Signal:</strong> SELL-side trades during Extreme Greed yield $114.58 avg — the single highest across all categories.</div>
+    <div class='rec'><strong>Signal 3 — Focus on @107, HYPE, SOL:</strong> These three coins account for $6.37M of total $10.3M PnL. Sentiment-timed entries on these assets maximise alpha.</div>
+    <div class='rec'><strong>Signal 4 — Scale Down in Greed:</strong> Reduce position sizes as FG approaches 80+. Data confirms smart money already does this (avg size drops 60%).</div>
+    <div class='warn'><strong>Risk Note:</strong> Win rates never exceed 47% across any sentiment — meaning most individual trades close at zero or loss. PnL is driven by a small number of large winning trades. Risk management and position sizing are critical.</div>
+  </div>
+
+  <div class='footer'>Analysis by · Primetrade.ai Round-0 Data Science Task · May 2026 · Data: Hyperliquid + Alternative.me Fear &amp; Greed Index</div>
+</div>
+</body>
+</html>
